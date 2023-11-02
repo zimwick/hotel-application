@@ -4,6 +4,9 @@
   <article class="fullheight" style="height: 568px;">
     <div class="hgroup">
       <h1>Landon Hotel</h1>
+      <div *ngFor="let message of welcomeMessages.welcomeMessage">
+      <h2>{{message}}</h2>
+      </div>
       <h2>London, Ontario</h2>
       <p><a href="/#welcome"><img src="assets/images/arrow.png" alt="down arrow"></a></p>
     </div>
@@ -23,7 +26,7 @@
   <div class="scene" id="welcome">
     <article class="content">
 
- 
+
 
       <div class="row">
         <div class=""col-12>
@@ -58,7 +61,7 @@
               </div>
               </form>
 
-        
+
         </div>
       </div>
 

@@ -15,6 +15,8 @@ import {map} from "rxjs/operators";
 })
 export class AppComponent implements OnInit{
 
+
+
   constructor(private httpClient:HttpClient){}
 
   private baseURL:string='http://localhost:8080';
@@ -28,6 +30,9 @@ export class AppComponent implements OnInit{
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
 
+  public welcomeMessages: WelcomeResponse = { welcomeMessage: [] };
+  private welcomeUrl: string = this.baseURL + '/welcome';
+
     ngOnInit(){
       this.roomsearch= new FormGroup({
         checkin: new FormControl(' '),
@@ -35,6 +40,15 @@ export class AppComponent implements OnInit{
       });
 
  //     this.rooms=ROOMS;
+      this.getWelcomeMessages().subscribe({
+        next: (response) => {
+          this.welcomeMessages = response;  // Store the response
+          console.log("Welcome messages:", response.welcomeMessage);
+        },
+        error: (error) => {
+          console.error("Error fetching welcome messages:", error);
+        }
+      });
 
 
     const roomsearchValueChanges$ = this.roomsearch.valueChanges;
@@ -44,7 +58,12 @@ export class AppComponent implements OnInit{
       this.currentCheckInVal = x.checkin;
       this.currentCheckOutVal = x.checkout;
     });
+
   }
+  getWelcomeMessages(): Observable<WelcomeResponse> {
+    return this.httpClient.get<WelcomeResponse>(this.welcomeUrl);
+  }
+
 
     onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
       this.getAll().subscribe(
@@ -93,7 +112,9 @@ export interface Roomsearch{
   }
 
 
-
+export interface WelcomeResponse {
+  welcomeMessage: string[];
+}
 
 export interface Room{
   id:string;

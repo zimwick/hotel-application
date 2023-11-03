@@ -26,7 +26,7 @@ public class WelcomeMessage {
 
     public class WelcomeThread1 extends Thread {
         public void run() {
-            String english = ResourceBundle.getBundle("locals", Locale.ENGLISH).getString("greeting");
+            String english = ResourceBundle.getBundle("locals", Locale.US).getString("greeting");
             synchronized (list) {
                 list.add(english);
             }

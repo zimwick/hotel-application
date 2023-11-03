@@ -15,8 +15,7 @@ import {map} from "rxjs/operators";
 })
 export class AppComponent implements OnInit{
 
-
-
+  timeString: string = "";
   constructor(private httpClient:HttpClient){}
 
   private baseURL:string='http://localhost:8080';
@@ -39,6 +38,20 @@ export class AppComponent implements OnInit{
         checkout: new FormControl(' ')
       });
 
+      this.getTime().subscribe({
+        next: (response) => {
+          this.timeString = response.time;  // Store the time string
+          console.log("Time:", response.time);
+        },
+        error: (error) => {
+          console.error("Error fetching time:", error);
+        }
+      });
+
+
+
+  // Method to get the time from the backend
+
  //     this.rooms=ROOMS;
       this.getWelcomeMessages().subscribe({
         next: (response) => {
@@ -51,6 +64,8 @@ export class AppComponent implements OnInit{
       });
 
 
+
+
     const roomsearchValueChanges$ = this.roomsearch.valueChanges;
 
     // subscribe to the stream
@@ -59,9 +74,14 @@ export class AppComponent implements OnInit{
       this.currentCheckOutVal = x.checkout;
     });
 
+
   }
   getWelcomeMessages(): Observable<WelcomeResponse> {
     return this.httpClient.get<WelcomeResponse>(this.welcomeUrl);
+  }
+
+  getTime(): Observable<TimeResponse> {
+    return this.httpClient.get<TimeResponse>(`${this.baseURL}/time`);
   }
 
 
@@ -114,6 +134,10 @@ export interface Roomsearch{
 
 export interface WelcomeResponse {
   welcomeMessage: string[];
+}
+
+export interface TimeResponse {
+  time: string;
 }
 
 export interface Room{

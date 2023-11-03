@@ -1,4 +1,4 @@
-FROM openjdk:21-slim
+FROM openjdk:17-oracle
 LABEL authors="LIGHTJ60"
 
 WORKDIR /app

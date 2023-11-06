@@ -86,11 +86,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-/* line 12 unordered list*/
-#currency {
-  background-color: white;
-}
-
 /* line 13, ../../../components/sass/_base.scss */
 strong {
   font-weight: 600;
